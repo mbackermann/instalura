@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
 import Pubsub from 'pubsub-js';
 
 export default class Header extends Component {
@@ -12,10 +13,15 @@ export default class Header extends Component {
         });
     }
 
+    root(){
+      browserHistory.push('/timeline');
+    }
+
+
     render(){
         return (
         <header className="header container">
-          <h1 className="header-logo">
+          <h1 className="header-logo" onClick={this.root}>
             Instalura
           </h1>
 
@@ -36,7 +42,7 @@ export default class Header extends Component {
               </li>
             </ul>
           </nav>
-        </header>            
+        </header>
         );
     }
 }

@@ -7,7 +7,7 @@ export default class Timeline extends Component {
     constructor(props){
       super(props);
       this.state = {fotos:[]};
-      this.login = this.props.login;      
+      this.login = this.props.login;
     }
 
     componentWillMount(){
@@ -16,14 +16,14 @@ export default class Timeline extends Component {
       })
     }
 
-    carregaFotos(){  
+    carregaFotos(){
       let urlPerfil;
 
       if(this.login === undefined) {
         urlPerfil = `http://localhost:8080/api/fotos?X-AUTH-TOKEN=${localStorage.getItem('auth-token')}`;
       } else {
         urlPerfil = `http://localhost:8080/api/public/fotos/${this.login}`;
-      }      
+      }
       this.props.store.lista(urlPerfil);
     }
 
@@ -34,8 +34,10 @@ export default class Timeline extends Component {
     componentWillReceiveProps(nextProps){
       if(nextProps.login !== undefined){
         this.login = nextProps.login;
-        this.carregaFotos();
+      }else{
+        this.login = undefined;
       }
+      this.carregaFotos();
     }
 
     like(fotoId) {
@@ -55,10 +57,10 @@ export default class Timeline extends Component {
           transitionLeaveTimeout={300}>
             {
               this.state.fotos.map(foto => <FotoItem key={foto.id} foto={foto} like={this.like.bind(this)} comenta={this.comenta.bind(this)}/>)
-            }               
-        </ReactCSSTransitionGroup>        
- 
-        </div>            
+            }
+        </ReactCSSTransitionGroup>
+
+        </div>
         );
     }
 }
